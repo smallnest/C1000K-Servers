@@ -1,0 +1,22 @@
+{
+	"curly": true,
+	"eqeqeq": true,
+	"nonew": true,
+	"latedef": "nofunc",
+	"unused": true,
+	"noarg": true,
+	"asi": true,
+	"trailing": true,
+	"quotmark": true,
+	"strict": true,
+	"undef": true,
+	"expr": true,
+	"newcap": true,
+	"immed": true,
+	"node": true,
+	"camelcase": true,
+	"devel": true,
+	"freeze": true,
+	"-W033": true,
+	"-W058": true
+}

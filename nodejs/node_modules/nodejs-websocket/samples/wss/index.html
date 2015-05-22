@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Simple websocket secure test</title>
+<script>
+var conn = new WebSocket("wss://127.0.0.1:8001")
+
+conn.onopen = function () {
+	console.log("Connection opened")
+	conn.send("hello world")
+}
+
+conn.onclose = function () {
+	console.log("Connection closed")
+}
+
+conn.onmessage = function (evt) {
+	console.info("Received "+evt.data)
+	conn.close()
+}
+
+conn.onerror = function () {
+	console.error("Error")
+}
+</script>
+</head>
+
+<body>
+<p><strong>Notes:</strong></p>
+<ol>
+	<li>Open web console</li>
+	<li>Run index.js script with nodejs</li>
+	<li>Access "https://127.0.0.1:8001" in another tab. The browser should alert you about security, since the certificate is self-signed</li>
+	<li>Accept security exception and close that tab</li>
+	<li>Reload this page</li>
+</ol>
+</body>
+</html>
