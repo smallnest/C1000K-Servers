@@ -9,6 +9,7 @@ import io.undertow.Undertow
 import io.undertow.websockets.WebSocketConnectionCallback
 import io.undertow.websockets.core._
 import io.undertow.websockets.spi.WebSocketHttpExchange
+import scala.collection.JavaConverters._
 
 object WebServer extends App with LazyLogging{
   if (!Common.onlyTestConnect) {
@@ -19,12 +20,10 @@ object WebServer extends App with LazyLogging{
           logger.info(s"current channels: ${Common.clients.size} for $flag")
         } else {
           logger.info(s"send msg to channels for $flag")
-          var count = 0
-          for (c <- Common.clients) {
+          Common.clients.par.foreach(c => {
             WebSockets.sendText(System.currentTimeMillis().toString, c, null)
-            count += 1
-          }
-          logger.info(s"sent $count channels for $flag")
+          })
+          logger.info(s"sent msg to channels for $flag. current websockets: ${Common.clients.size}")
         }
       }
     }, Common.delay, Common.interval, TimeUnit.MINUTES)
