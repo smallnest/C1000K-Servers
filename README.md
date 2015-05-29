@@ -22,4 +22,6 @@ I have created 10 virtual internal IP addresses on each client.
 Servers will send one message per minutes to all 1,200,000 connections. Each message only contains current time of this server. Clients can output metrics to monitor.
 Currently servers only use one thread to send messages to all websockets. If we use multiple threads to send, maybe we can get higher performance.
 
-Ine one word, it is feasible to achieve 1,000,000 connections by popular frameworks. 
+In one word, it is feasible to achieve 1,000,000 connections on popular frameworks. 
+
+Run `sbt clean dist` to compile and package projects.
