@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.LazyLogging
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.buffer.{ByteBufAllocator, PooledByteBufAllocator}
 import io.netty.channel._
-import io.netty.channel.epoll.{Epoll, EpollEventLoopGroup, EpollServerSocketChannel}
+import io.netty.channel.epoll.{EpollChannelOption, Epoll, EpollEventLoopGroup, EpollServerSocketChannel}
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
@@ -25,6 +25,7 @@ object WebServer extends App with LazyLogging{
     bootstrap.group(bossGroup, workerGroup)
       .option[Integer](ChannelOption.SO_BACKLOG, 1024)
       .option[java.lang.Boolean](ChannelOption.SO_REUSEADDR, true)
+      .option[java.lang.Boolean](EpollChannelOption.SO_REUSEPORT, true)
       .option[Integer](ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE)
       .childOption[ByteBufAllocator](ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true))
       .childOption[java.lang.Boolean](ChannelOption.SO_REUSEADDR, true)
@@ -54,10 +55,11 @@ object WebServer extends App with LazyLogging{
             logger.info(s"current channels: ${Common.clients.size()} for $flag")
           } else {
             logger.info(s"send msg to channels for $flag")
-            Common.clients.asScala.par.foreach(c => {
-              c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
-              c.flush()
-            })
+            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
+//            Common.clients.asScala.par.foreach(c => {
+//              c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
+//              c.flush()
+//            })
             logger.info(s"sent msg to channels for $flag. current channels: ${Common.clients.size}")
           }
         }
@@ -70,6 +72,9 @@ object WebServer extends App with LazyLogging{
   finally {
     bossGroup.shutdownGracefully()
     workerGroup.shutdownGracefully()
+    Common.clients.asScala.par.foreach(c => {
+      c.close()
+    })
   }
 }
 
