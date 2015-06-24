@@ -18,7 +18,7 @@ object Build extends sbt.Build {
   val akka_version = "2.3.9"
   val typesafe_config_version = "1.2.1"
   val scala_xml_version = "1.0.3"
-  val jetty_websocket_version = "9.3.0.M2"
+  val jetty_websocket_version = "9.3.0.v20150612"
   val javax_websocket_version = "1.1"
   val metrics_version = "3.1.2"
   val scala_logging_version = "3.1.0"
@@ -51,6 +51,10 @@ object Build extends sbt.Build {
     "com.wandoulabs.akka" %% "spray-websocket" % spray_websocket_version
   ) ++ commondependencies
 
+  val jettydependencies = Seq(
+    "org.eclipse.jetty.websocket" % "javax-websocket-server-impl" % jetty_websocket_version
+  ) ++ commondependencies
+
   lazy val testClientdependencies = Seq(
     "org.eclipse.jetty.websocket" % "javax-websocket-client-impl" % jetty_websocket_version,
     "javax.websocket" % "javax.websocket-api" % javax_websocket_version,
@@ -59,7 +63,7 @@ object Build extends sbt.Build {
 
   lazy val root = Project("c1000k", file("."))
     .settings(defaultSettings: _*)
-    .aggregate(undertow, netty, spray, testclient)
+    .aggregate(undertow, netty, spray, jetty, testclient)
 
   lazy val undertow = Project("undertow", file("undertow"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
@@ -74,6 +78,11 @@ object Build extends sbt.Build {
     .settings(defaultSettings: _*)
     .settings(libraryDependencies ++= nettydependencies)
 
+  lazy val jetty = Project("jetty", file("jetty"))
+    .enablePlugins(sbtassembly.AssemblyPlugin)
+    .enablePlugins(JavaAppPackaging)
+    .settings(defaultSettings: _*)
+    .settings(libraryDependencies ++= jettydependencies)
 
   lazy val spray = Project("spray-can", file("spray-can"))
     .enablePlugins(sbtassembly.AssemblyPlugin)

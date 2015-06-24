@@ -9,7 +9,6 @@ import io.undertow.Undertow
 import io.undertow.websockets.WebSocketConnectionCallback
 import io.undertow.websockets.core._
 import io.undertow.websockets.spi.WebSocketHttpExchange
-import scala.collection.JavaConverters._
 
 object WebServer extends App with LazyLogging{
   if (!Common.onlyTestConnect) {
