@@ -23,6 +23,8 @@ object Build extends sbt.Build {
   val metrics_version = "3.1.2"
   val scala_logging_version = "3.1.0"
   val logback_version = "1.1.3"
+  val vertx_version = "2.1.6"
+  val vertx_scala_version = "1.1.0-M1"
 
   val commondependencies = Seq(
     "com.typesafe" % "config" % typesafe_config_version,
@@ -33,6 +35,12 @@ object Build extends sbt.Build {
     "io.netty" % "netty-all" % netty_version,
     "com.jcraft" % "jzlib" % jzlib_version,
     "io.netty" % "netty-transport-native-epoll" % netty_version classifier "linux-x86_64"
+  ) ++ commondependencies
+
+  val vertxdependencies = Seq(
+    "io.vertx" % "vertx-core" % vertx_version,
+    "io.vertx" % "vertx-platform" % vertx_version,
+    "io.vertx" % "lang-scala_2.11" %  vertx_scala_version
   ) ++ commondependencies
 
   val undertowdependencies = Seq(
@@ -63,7 +71,7 @@ object Build extends sbt.Build {
 
   lazy val root = Project("c1000k", file("."))
     .settings(defaultSettings: _*)
-    .aggregate(undertow, netty, spray, jetty, testclient)
+    .aggregate(undertow, netty, spray, jetty, vertx, testclient)
 
   lazy val undertow = Project("undertow", file("undertow"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
@@ -77,6 +85,12 @@ object Build extends sbt.Build {
     .enablePlugins(JavaAppPackaging)
     .settings(defaultSettings: _*)
     .settings(libraryDependencies ++= nettydependencies)
+
+  lazy val vertx = Project("vertx", file("vertx"))
+    .enablePlugins(sbtassembly.AssemblyPlugin)
+    .enablePlugins(JavaAppPackaging)
+    .settings(defaultSettings: _*)
+    .settings(libraryDependencies ++= vertxdependencies)
 
   lazy val jetty = Project("jetty", file("jetty"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
