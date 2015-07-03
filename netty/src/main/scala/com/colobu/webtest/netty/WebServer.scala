@@ -55,11 +55,11 @@ object WebServer extends App with LazyLogging{
             logger.info(s"current channels: ${Common.clients.size()} for $flag")
           } else {
             logger.info(s"send msg to channels for $flag")
-            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
-//            Common.clients.asScala.par.foreach(c => {
-//              c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
-//              c.flush()
-//            })
+//            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
+            Common.clients.asScala.par.foreach(c => {
+              c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
+              c.flush()
+            })
             logger.info(s"sent msg to channels for $flag. current channels: ${Common.clients.size}")
           }
         }
