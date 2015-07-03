@@ -51,10 +51,10 @@ object Main extends App  with LazyLogging{
 
   def startReport(): Unit = {
     val reporter = ConsoleReporter.forRegistry(Common.metrics)
-      .convertRatesTo(TimeUnit.MINUTES)
+      .convertRatesTo(TimeUnit.SECONDS)
       .convertDurationsTo(TimeUnit.SECONDS)
       .build()
-    reporter.start(1, TimeUnit.MINUTES)
+    reporter.start(10, TimeUnit.SECONDS)
   }
 
 }

@@ -25,7 +25,7 @@ object WebServer extends App with LazyLogging{
     bootstrap.group(bossGroup, workerGroup)
       .option[Integer](ChannelOption.SO_BACKLOG, 1024)
       .option[java.lang.Boolean](ChannelOption.SO_REUSEADDR, true)
-      .option[java.lang.Boolean](EpollChannelOption.SO_REUSEPORT, true)
+      //.option[java.lang.Boolean](EpollChannelOption.SO_REUSEPORT, true)
       .option[Integer](ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE)
       .childOption[ByteBufAllocator](ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true))
       .childOption[java.lang.Boolean](ChannelOption.SO_REUSEADDR, true)
