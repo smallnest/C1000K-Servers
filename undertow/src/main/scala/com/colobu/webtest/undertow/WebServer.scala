@@ -19,7 +19,7 @@ object WebServer extends App with LazyLogging{
           logger.info(s"current channels: ${Common.clients.size} for $flag")
         } else {
           logger.info(s"send msg to channels for $flag")
-          Common.clients.par.foreach(c => {
+          Common.clients.foreach(c => {
             WebSockets.sendText(System.currentTimeMillis().toString, c, null)
           })
           logger.info(s"sent msg to channels for $flag. current websockets: ${Common.clients.size}")

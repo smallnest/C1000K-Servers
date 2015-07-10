@@ -1,4 +1,4 @@
-package com.colobu.webtest.netty
+package com.colobu.webtest.grizzly
 
 import java.util.UUID
 import java.util.concurrent.{TimeUnit, Executors}
@@ -7,14 +7,14 @@ import com.typesafe.scalalogging.LazyLogging
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.buffer.{ByteBufAllocator, PooledByteBufAllocator}
 import io.netty.channel._
-import io.netty.channel.epoll.{EpollChannelOption, Epoll, EpollEventLoopGroup, EpollServerSocketChannel}
+import io.netty.channel.epoll.{Epoll, EpollEventLoopGroup, EpollServerSocketChannel}
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.codec.http._
 import io.netty.handler.codec.http.websocketx._
 import scala.collection.JavaConverters._
-import io.netty.handler.codec.http.websocketx.extensions.compression.{WebSocketServerCompressionHandler, DeflateFrameServerExtensionHandshaker}
+import io.netty.handler.codec.http.websocketx.extensions.compression.{WebSocketServerCompressionHandler}
 
 object WebServer extends App with LazyLogging{
   val bossGroup = if (Epoll.isAvailable()) new EpollEventLoopGroup() else new NioEventLoopGroup()
@@ -56,7 +56,7 @@ object WebServer extends App with LazyLogging{
           } else {
             logger.info(s"send msg to channels for $flag")
 //            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
-            Common.clients.asScala.par.foreach(c => {
+            Common.clients.asScala.foreach(c => {
               c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
               c.flush()
             })

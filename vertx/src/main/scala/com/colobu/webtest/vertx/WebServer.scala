@@ -4,7 +4,6 @@ import java.util.UUID
 
 import com.typesafe.scalalogging.Logger
 import org.vertx.java.core.impl.DefaultVertxFactory
-import org.vertx.java.core.{Vertx => JVertx}
 import org.slf4j.LoggerFactory
 import org.vertx.scala.core.Vertx
 import org.vertx.scala.core.buffer.Buffer
@@ -38,7 +37,7 @@ object WebServer extends App {
           log.info(s"current websockets: ${Common.serverWebSockets.size} for $flag")
         } else {
           log.info(s"send msg to websockets for $flag")
-          Common.serverWebSockets.par.foreach(s => {
+          Common.serverWebSockets.foreach(s => {
             s.writeTextFrame(System.currentTimeMillis().toString)
           })
           log.info(s"sent msg to websockets for $flag. current websockets: ${Common.serverWebSockets.size}")

@@ -25,6 +25,8 @@ object Build extends sbt.Build {
   val logback_version = "1.1.3"
   val vertx_version = "2.1.6"
   val vertx_scala_version = "1.1.0-M1"
+  val grizzly_version = "2.3.21"
+  val servlet_api_version = "3.1.0"
 
   val commondependencies = Seq(
     "com.typesafe" % "config" % typesafe_config_version,
@@ -63,6 +65,13 @@ object Build extends sbt.Build {
     "org.eclipse.jetty.websocket" % "javax-websocket-server-impl" % jetty_websocket_version
   ) ++ commondependencies
 
+  val grizzlydependencies = Seq(
+    "org.glassfish.grizzly" % "grizzly-websockets" % grizzly_version,
+    "org.glassfish.grizzly" % "grizzly-http-server" % grizzly_version,
+    "org.glassfish.grizzly" % "grizzly-http-servlet" % grizzly_version,
+    "javax.servlet" % "javax.servlet-api" % servlet_api_version
+  ) ++ commondependencies
+
   lazy val testClientdependencies = Seq(
     "org.eclipse.jetty.websocket" % "javax-websocket-client-impl" % jetty_websocket_version,
     "javax.websocket" % "javax.websocket-api" % javax_websocket_version,
@@ -71,7 +80,7 @@ object Build extends sbt.Build {
 
   lazy val root = Project("c1000k", file("."))
     .settings(defaultSettings: _*)
-    .aggregate(undertow, netty, spray, jetty, vertx, testclient)
+    .aggregate(undertow, netty, spray, jetty, vertx, grizzly, testclient)
 
   lazy val undertow = Project("undertow", file("undertow"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
@@ -97,6 +106,12 @@ object Build extends sbt.Build {
     .enablePlugins(JavaAppPackaging)
     .settings(defaultSettings: _*)
     .settings(libraryDependencies ++= jettydependencies)
+
+  lazy val grizzly = Project("grizzly", file("grizzly"))
+    .enablePlugins(sbtassembly.AssemblyPlugin)
+    .enablePlugins(JavaAppPackaging)
+    .settings(defaultSettings: _*)
+    .settings(libraryDependencies ++= grizzlydependencies)
 
   lazy val spray = Project("spray-can", file("spray-can"))
     .enablePlugins(sbtassembly.AssemblyPlugin)

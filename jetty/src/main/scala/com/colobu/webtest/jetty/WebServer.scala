@@ -1,4 +1,4 @@
-package com.colobu.webtest.netty
+package com.colobu.webtest.grizzly
 
 import java.util.UUID
 import java.util.concurrent.{TimeUnit, Executors}
@@ -30,7 +30,7 @@ object WebServer extends App with LazyLogging {
           logger.info(s"current sessions: ${Common.sessions.size} for $flag")
         } else {
           logger.info(s"send msg to sessions for $flag")
-          Common.sessions.par.foreach(c => {
+          Common.sessions.foreach(c => {
             c.getBasicRemote.sendText(System.currentTimeMillis().toString)
           })
           logger.info(s"sent msg to sessions for $flag. current websockets: ${Common.sessions.size}")
