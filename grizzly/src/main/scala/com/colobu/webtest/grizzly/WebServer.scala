@@ -1,4 +1,4 @@
-package main.scala.com.colobu.webtest.netty
+package main.scala.com.colobu.webtest.grizzly
 
 import java.util.UUID
 import java.util.concurrent.{Executors, TimeUnit}
