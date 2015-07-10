@@ -1,4 +1,4 @@
-This project implements six high performance websocket servers.
+This project implements seven high performance websocket servers.
 It contains:
 * [spray-websocket](https://github.com/wandoulabs/spray-websocket)
 * [Netty](http://netty.io/)
@@ -6,6 +6,7 @@ It contains:
 * [nodejs-websocket/Node.js](https://github.com/sitegui/nodejs-websocket)
 * [Jetty](http://www.eclipse.org/jetty/)
 * [Vert.x](http://http://vertx.io)
+* [Grizzly](https://grizzly.java.net/)
 
 And it also contains one client to test those servers.
 
