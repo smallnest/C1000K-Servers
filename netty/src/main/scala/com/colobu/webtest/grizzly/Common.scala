@@ -1,5 +1,7 @@
 package com.colobu.webtest.netty
 
+import java.util.concurrent.TimeUnit
+
 import com.typesafe.config.ConfigFactory
 import io.netty.channel.group.DefaultChannelGroup
 import io.netty.util.concurrent.GlobalEventExecutor
@@ -12,6 +14,6 @@ object Common {
   val totalSize = conf.getInt("totalSize")
 
   val port = conf.getInt("server.port")
-  val delay = conf.getLong("sending.timer.delay")
-  val interval = conf.getLong("sending.timer.interval")
+  val delay = conf.getDuration("sending.timer.delay", TimeUnit.MILLISECONDS)
+  val interval = conf.getDuration("sending.timer.interval", TimeUnit.MILLISECONDS)
 }

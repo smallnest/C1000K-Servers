@@ -25,7 +25,7 @@ object WebServer extends App with LazyLogging{
           logger.info(s"sent msg to channels for $flag. current websockets: ${Common.clients.size}")
         }
       }
-    }, Common.delay, Common.interval, TimeUnit.MINUTES)
+    }, Common.delay, Common.interval, TimeUnit.MILLISECONDS)
   }
 
   val server = Undertow.builder()

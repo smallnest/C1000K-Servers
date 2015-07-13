@@ -30,8 +30,8 @@ object WebServer extends App {
 
 
   if (!Common.onlyTestConnect) {
-    vertx.setTimer(Common.delay.minutes.toMillis, id => {
-      vertx.setPeriodic(Common.interval.minutes.toMillis, id => {
+    vertx.setTimer(Common.delay.milliseconds.toMillis, id => {
+      vertx.setPeriodic(Common.interval.milliseconds.toMillis, id => {
         val flag = UUID.randomUUID().toString
         if (Common.serverWebSockets.size < Common.totalSize) {
           log.info(s"current websockets: ${Common.serverWebSockets.size} for $flag")

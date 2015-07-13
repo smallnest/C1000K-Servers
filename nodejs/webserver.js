@@ -12,7 +12,7 @@ var server = ws.createServer(function (conn) {
 }).listen(8088)
 
 function broadcast() {
-	if (server.connections.length >= 1200000) {
+	if (server.connections.length >= 1000000) {
 		console.log(new Date().getTime() + ": send msg to current connections")
 		server.connections.forEach(function (conn) {
 			conn.sendText(new Date().getTime() + "")
@@ -27,6 +27,6 @@ function send() {
 	setInterval(broadcast, 60 * 1000)
 }
 
-setTimeout(send, 10* 60 * 1000);
+setTimeout(send, 10 * 60 * 1000);
 
 console.log("started")

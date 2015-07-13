@@ -36,7 +36,7 @@ object WebServer extends App with LazyLogging {
           logger.info(s"sent msg to sessions for $flag. current websockets: ${Common.sessions.size}")
         }
       }
-    }, Common.delay, Common.interval, TimeUnit.MINUTES)
+    }, Common.delay, Common.interval, TimeUnit.MILLISECONDS)
   }
 
   try {

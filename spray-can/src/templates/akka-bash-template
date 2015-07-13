@@ -6,7 +6,7 @@ declare -r lib_dir="${AKKA_HOME}/lib"
 
 ${{template_declares}}
 
-[ -n "$JAVA_OPTS" ] || JAVA_OPTS="-Xms12G -Xmx12G -Xss1M -XX:+UseParallelGC"
+[ -n "$JAVA_OPTS" ] || JAVA_OPTS="-Xms12G -Xmx12G -Xss1M -XX:+UseParallelGC  -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps "
 
 # we will use akka_classpath instead the app_classpath
 [ -n "$akka_classpath" ] || akka_classpath="$AKKA_HOME/lib/*:$AKKA_HOME/conf"

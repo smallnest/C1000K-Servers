@@ -338,7 +338,7 @@ ${{template_declares}}
 # java_cmd is overrode in process_args when -java-home is used
 declare java_cmd=$(get_java_cmd)
 
-[ -n "$JAVA_OPTS" ] || JAVA_OPTS="-Xms12G -Xmx12G -Xss1M -XX:+UseParallelGC"
+[ -n "$JAVA_OPTS" ] || JAVA_OPTS="-Xms12G -Xmx12G -Xss1M -XX:+UseParallelGC  -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps "
 
 if [ -n "$APP_CONFIG" ]; then
     JAVA_OPTS="$JAVA_OPTS -Dconfig.file=$APP_CONFIG"

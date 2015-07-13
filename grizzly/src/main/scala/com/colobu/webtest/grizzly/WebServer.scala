@@ -33,7 +33,7 @@ object WebServer extends App with LazyLogging{
           logger.info(s"sent msg to channels for $flag. current channels: ${app.getWebSockets.size}")
         }
       }
-    }, Common.delay, Common.interval, TimeUnit.MINUTES)
+    }, Common.delay, Common.interval, TimeUnit.MILLISECONDS)
   }
 
   try {
