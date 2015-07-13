@@ -1,4 +1,4 @@
-package com.colobu.webtest.grizzly
+package com.colobu.webtest.netty
 
 import com.typesafe.config.ConfigFactory
 import io.netty.channel.group.DefaultChannelGroup

@@ -1,4 +1,4 @@
-package com.colobu.webtest.grizzly
+package com.colobu.webtest.netty
 
 import java.util.UUID
 import java.util.concurrent.{TimeUnit, Executors}
