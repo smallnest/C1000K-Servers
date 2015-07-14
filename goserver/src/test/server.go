@@ -12,8 +12,12 @@ import (
 
 var wsList = list.New()
 
+var wsListChannel = make(chan *websocket.Conn)
+
+
+
 func wsHandler(ws *websocket.Conn) {
-	wsList.PushBack(ws)
+	wsListChannel <- ws
 	for {
         var reply string
         if err := websocket.Message.Receive(ws, &reply); err != nil {
@@ -44,6 +48,11 @@ func main() {
 				}
 			}
 		}
+	}()
+
+	go func() {
+		ws := <- wsListChannel
+		wsList.PushBack(ws)
 	}()
 
 	err := http.ListenAndServe(":"+ strconv.Itoa(goserver.Port), nil)
