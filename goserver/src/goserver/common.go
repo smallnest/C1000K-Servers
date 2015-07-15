@@ -1,5 +1,10 @@
 package goserver
 
-const Port = 8088
-const Delay = 6
-const Interval = 1
+
+type Configuration struct {
+	Port int
+	Delay string
+	Interval string
+	TotalSize int
+	OnlyTestConnect bool
+}

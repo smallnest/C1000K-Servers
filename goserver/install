@@ -11,7 +11,7 @@ export GOPATH="$CURDIR"
 
 gofmt -w src
 
-go install test
+go install webserver
 
 export GOPATH="$OLDGOPATH"
 
