@@ -16,15 +16,15 @@ import (
 )
 
 var Config goserver.Configuration
+const n = 10
+var wsList = [n]*list.List {list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New()}
+var locks = [n]sync.RWMutex {}
 
-var wsList = [10]*list.List {list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New(),list.New()}
-var locks = [10]sync.RWMutex {}
-var r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 func wsHandler(ws *websocket.Conn) {
 	//p := unsafe.Pointer(&ws)
-	//index := ((int)(uintptr(p))) % 10
-	index := r.Intn(10)
+	//index := ((int)(uintptr(p))) % n
+	index := rand.Intn(n)
 	lock := locks[index]
 	lock.Lock()
 	wsList[index].PushBack(ws)		
@@ -61,6 +61,9 @@ func load(configfile string) goserver.Configuration {
 }
 
 func main() {
+	seed := time.Now().UTC().UnixNano()
+	rand.Seed(seed)
+
 	Config = load("config.json")
 	
 	//http.Handle("/", websocket.Handler(wsHandler))
@@ -78,12 +81,12 @@ func main() {
 				<-timer.C
 				timer.Reset(interval)
 				totalLen := 0
-				for i :=0; i < 10; i++ {
+				for i :=0; i < n; i++ {
 					totalLen += wsList[i].Len()
 				}
 				if totalLen >= Config.TotalSize {
 					fmt.Println("send timestamp to all")
-					for i :=0; i < 10; i++ {
+					for i :=0; i < n; i++ {
 						for e := wsList[i].Front(); e != nil; e = e.Next() {
 							var ws = e.Value.(*websocket.Conn)
 							now := time.Now().UnixNano() / int64(time.Millisecond)
