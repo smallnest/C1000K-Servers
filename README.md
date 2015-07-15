@@ -7,6 +7,7 @@ It contains:
 * [Jetty](http://www.eclipse.org/jetty/)
 * [Vert.x](http://http://vertx.io)
 * [Grizzly](https://grizzly.java.net/)
+* [Go](https://golang.org/)
 
 And it also contains one client to test those servers.
 
