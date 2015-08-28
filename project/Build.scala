@@ -12,20 +12,20 @@ import sbtrelease.ReleasePlugin._
 object Build extends sbt.Build {
   val netty_version = "5.0.0.Alpha2"
   val jzlib_version = "1.1.3"
-  val undertow_version = "1.2.0.CR1"
-  val spray_version = "1.3.1"
+  val undertow_version = "1.3.0.Beta9"
+  val spray_version = "1.3.2"
   val spray_websocket_version = "0.1.4"
-  val akka_version = "2.3.9"
-  val typesafe_config_version = "1.2.1"
-  val scala_xml_version = "1.0.3"
-  val jetty_websocket_version = "9.3.0.v20150612"
+  val akka_version = "2.3.12"
+  val typesafe_config_version = "1.3.0"
+  val scala_xml_version = "1.0.5"
+  val jetty_websocket_version = "9.3.2.v20150730"
   val javax_websocket_version = "1.1"
   val metrics_version = "3.1.2"
   val scala_logging_version = "3.1.0"
   val logback_version = "1.1.3"
   val vertx_version = "2.1.6"
   val vertx_scala_version = "1.1.0-M1"
-  val grizzly_version = "2.3.21"
+  val grizzly_version = "2.3.22"
   val servlet_api_version = "3.1.0"
 
   val commondependencies = Seq(
@@ -87,7 +87,6 @@ object Build extends sbt.Build {
     .enablePlugins(JavaAppPackaging)
     .settings(defaultSettings: _*)
     .settings(libraryDependencies ++= undertowdependencies)
-    .enablePlugins(sbtassembly.AssemblyPlugin)
 
   lazy val netty = Project("netty", file("netty"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
