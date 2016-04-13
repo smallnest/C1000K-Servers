@@ -1,3 +1,5 @@
+![](https://travis-ci.org/smallnest/C1000K-Servers.svg?branch=master)
+
 This project implements seven high performance websocket servers.
 It contains:
 * [spray-websocket](https://github.com/wandoulabs/spray-websocket)
