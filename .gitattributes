@@ -1,0 +1,3 @@
+*.sh linguist-language=Scala
+bash-template linguist-language=Scala
+install linguist-language=Scala
