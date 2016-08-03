@@ -20,7 +20,7 @@ object WebServer extends App with LazyLogging{
   val bossGroup = if (Epoll.isAvailable()) new EpollEventLoopGroup() else new NioEventLoopGroup()
   val workerGroup = if (Epoll.isAvailable()) new EpollEventLoopGroup() else new NioEventLoopGroup()
 
-  try
+  try {
     val bootstrap = new ServerBootstrap()
     bootstrap.group(bossGroup, workerGroup)
       .option[Integer](ChannelOption.SO_BACKLOG, 1024)
@@ -67,8 +67,7 @@ object WebServer extends App with LazyLogging{
     }
     logger.info("started")
     channel.closeFuture().sync()
-
-
+  }
   finally {
     bossGroup.shutdownGracefully()
     workerGroup.shutdownGracefully()

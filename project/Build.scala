@@ -13,9 +13,10 @@ object Build extends sbt.Build {
   val netty_version = "4.1.4.Final"
   val jzlib_version = "1.1.3"
   val undertow_version = "1.3.24.Final"
-  val spray_version = "1.3.2"
+  val spray_version = "1.3.3"
+  val spray_json_version = "1.3.2"
   val spray_websocket_version = "0.1.4"
-  val akka_version = "2.3.12"
+  val akka_version = "2.4.8"
   val typesafe_config_version = "1.3.0"
   val scala_xml_version = "1.0.5"
   val jetty_websocket_version = "9.3.11.v20160721"
@@ -56,7 +57,7 @@ object Build extends sbt.Build {
     "com.typesafe.akka" %% "akka-kernel" % akka_version,
     "com.typesafe.akka" %% "akka-slf4j" % akka_version,
     "io.spray" %% "spray-http" % spray_version,
-    "io.spray" %% "spray-json" % spray_version,
+    "io.spray" %% "spray-json" % spray_json_version,
     "io.spray" %% "spray-routing-shapeless2" % spray_version,
     "com.wandoulabs.akka" %% "spray-websocket" % spray_websocket_version
   ) ++ commondependencies
