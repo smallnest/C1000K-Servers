@@ -10,22 +10,22 @@ import sbtbuildinfo.Plugin.{BuildInfoKey, _}
 import sbtrelease.ReleasePlugin._
 
 object Build extends sbt.Build {
-  val netty_version = "5.0.0.Alpha2"
+  val netty_version = "4.1.4.Final"
   val jzlib_version = "1.1.3"
-  val undertow_version = "1.3.0.Beta9"
+  val undertow_version = "1.3.24.Final"
   val spray_version = "1.3.2"
   val spray_websocket_version = "0.1.4"
   val akka_version = "2.3.12"
   val typesafe_config_version = "1.3.0"
   val scala_xml_version = "1.0.5"
-  val jetty_websocket_version = "9.3.2.v20150730"
+  val jetty_websocket_version = "9.3.11.v20160721"
   val javax_websocket_version = "1.1"
   val metrics_version = "3.1.2"
-  val scala_logging_version = "3.1.0"
-  val logback_version = "1.1.3"
+  val scala_logging_version = "3.4.0"
+  val logback_version = "1.1.7"
   val vertx_version = "2.1.6"
   val vertx_scala_version = "1.1.0-M1"
-  val grizzly_version = "2.3.22"
+  val grizzly_version = "2.3.26"
   val servlet_api_version = "3.1.0"
 
   val commondependencies = Seq(
@@ -137,7 +137,7 @@ object Build extends sbt.Build {
     organization := "com.colobu.c1000k",
     version := "0.1",
     externalResolvers := Resolvers.all,
-    scalaVersion := "2.11.6",
+    scalaVersion := "2.11.8",
     scalacOptions := Seq("-deprecation", "-feature")
   )
 

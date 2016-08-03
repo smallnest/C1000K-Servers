@@ -20,7 +20,7 @@ object WebServer extends App with LazyLogging{
   val bossGroup = if (Epoll.isAvailable()) new EpollEventLoopGroup() else new NioEventLoopGroup()
   val workerGroup = if (Epoll.isAvailable()) new EpollEventLoopGroup() else new NioEventLoopGroup()
 
-  try {
+  try
     val bootstrap = new ServerBootstrap()
     bootstrap.group(bossGroup, workerGroup)
       .option[Integer](ChannelOption.SO_BACKLOG, 1024)
@@ -55,7 +55,7 @@ object WebServer extends App with LazyLogging{
             logger.info(s"current channels: ${Common.clients.size()} for $flag")
           } else {
             logger.info(s"send msg to channels for $flag")
-//            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
+            //            Common.clients.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
             Common.clients.asScala.foreach(c => {
               c.write(new TextWebSocketFrame(System.currentTimeMillis().toString))
               c.flush()
@@ -68,7 +68,7 @@ object WebServer extends App with LazyLogging{
     logger.info("started")
     channel.closeFuture().sync()
 
-  }
+
   finally {
     bossGroup.shutdownGracefully()
     workerGroup.shutdownGracefully()
@@ -85,14 +85,23 @@ class WebSocketServerHandler extends SimpleChannelInboundHandler[Object] with La
     ctx.flush()
   }
 
+//
+//  override def messageReceived(ctx: ChannelHandlerContext, msg: Object): Unit = {
+//    msg match {
+//      case req: FullHttpRequest => handleHttpRequest(ctx, req)
+//      case m: WebSocketFrame => handleWebSocketFrame(ctx, m)
+//      case _ =>
+//    }
+//  }
 
-  override def messageReceived(ctx: ChannelHandlerContext, msg: Object): Unit = {
+  override def channelRead0(ctx: ChannelHandlerContext, msg: Object): Unit = {
     msg match {
       case req: FullHttpRequest => handleHttpRequest(ctx, req)
       case m: WebSocketFrame => handleWebSocketFrame(ctx, m)
       case _ =>
     }
   }
+
 
   def handleWebSocketFrame(ctx: ChannelHandlerContext, frame: WebSocketFrame) {
     frame match {
