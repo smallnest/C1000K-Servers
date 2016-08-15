@@ -87,14 +87,18 @@ func main() {
 				if totalLen >= Config.TotalSize {
 					fmt.Println("send timestamp to all")
 					for i :=0; i < n; i++ {
-						for e := wsList[i].Front(); e != nil; e = e.Next() {
-							var ws = e.Value.(*websocket.Conn)
-							now := time.Now().UnixNano() / int64(time.Millisecond)
-							err := websocket.Message.Send(ws, strconv.FormatInt(now, 10))
-							if err != nil {
-								panic("Error: " + err.Error())
+						i := i
+						go func() {
+							for e := wsList[i].Front(); e != nil; e = e.Next() {
+								var ws = e.Value.(*websocket.Conn)
+								now := time.Now().UnixNano() / int64(time.Millisecond)
+								err := websocket.Message.Send(ws, strconv.FormatInt(now, 10))
+								if err != nil {
+									panic("Error: " + err.Error())
+								}
 							}
-						}
+						}()
+
 					}					
 				} else {
 					fmt.Println("current websockets: " + strconv.Itoa(totalLen))

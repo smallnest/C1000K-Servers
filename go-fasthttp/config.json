@@ -1,0 +1,7 @@
+{
+	"port": 8088,
+	"delay": "6m",
+	"interval": "1m",
+	"totalSize": 1000000,
+	"onlyTestConnect": false
+}
