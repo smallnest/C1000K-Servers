@@ -93,7 +93,7 @@ func main() {
 					totalLen += wsList[i].Len()
 				}
 				if totalLen >= Config.TotalSize {
-					fmt.Println("send timestamp to all")
+					fmt.Println("all clients are ready. send timestamp to all")
 					for i := 0; i < n; i++ {
 						i := i
 						go func() {

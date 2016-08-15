@@ -6,8 +6,11 @@ import com.typesafe.sbt.packager.universal.UniversalDeployPlugin
 import sbt.Defaults._
 import sbt.Keys._
 import sbt._
+import sbtassembly.MergeStrategy
 import sbtbuildinfo.Plugin.{BuildInfoKey, _}
 import sbtrelease.ReleasePlugin._
+import sbtassembly.AssemblyKeys._
+
 
 object Build extends sbt.Build {
   val netty_version = "4.1.4.Final"
@@ -115,7 +118,7 @@ object Build extends sbt.Build {
 
   lazy val spray = Project("spray-can", file("spray-can"))
     .enablePlugins(sbtassembly.AssemblyPlugin)
-    .enablePlugins(AkkaAppPackaging)
+    .enablePlugins(JavaAppPackaging)
     .enablePlugins(UniversalDeployPlugin)
     .settings(defaultSettings: _*)
     .settings(buildInfoSettings ++ Seq(
@@ -139,8 +142,16 @@ object Build extends sbt.Build {
     version := "0.1",
     externalResolvers := Resolvers.all,
     scalaVersion := "2.11.8",
-    scalacOptions := Seq("-deprecation", "-feature")
+    scalacOptions := Seq("-deprecation", "-feature"),
+    assemblyMergeStrategy in assembly := {
+      case "META-INF/io.netty.versions.properties" => MergeStrategy.first
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
   )
+
+
 
   object Resolvers {
     val jgitrepo = "jgit-repo" at "http://download.eclipse.org/jgit/maven"
