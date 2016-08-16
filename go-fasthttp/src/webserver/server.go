@@ -102,7 +102,7 @@ func main() {
 								now := time.Now().UnixNano() / int64(time.Millisecond)
 								err := ws.WriteMessage(websocket.TextMessage, []byte(strconv.FormatInt(now, 10)))
 								if err != nil {
-									panic("Error: " + err.Error())
+									fmt.Println("Error: " + err.Error())
 								}
 							}
 						}()

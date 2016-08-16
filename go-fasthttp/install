@@ -11,6 +11,8 @@ export GOPATH="$CURDIR"
 
 gofmt -w src
 
+export GOOS=linux
+
 go get github.com/fasthttp-contrib/websocket
 go install webserver
 
