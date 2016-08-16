@@ -135,7 +135,7 @@ object Build extends sbt.Build {
     .enablePlugins(JavaAppPackaging)
     .settings(defaultSettings: _*)
     .settings(libraryDependencies ++= testClientdependencies)
-    .settings(mainClass in Compile := Some("com.colobu.c1000k.testclient.Main"))
+    .settings(mainClass in Compile := Some("com.colobu.c1000k.testclient.AllMain"))
 
   lazy val defaultSettings = coreDefaultSettings ++ releaseSettings ++ Seq(
     organization := "com.colobu.c1000k",

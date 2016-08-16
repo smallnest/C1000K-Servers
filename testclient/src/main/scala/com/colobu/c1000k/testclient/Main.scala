@@ -9,18 +9,21 @@ import com.typesafe.scalalogging.LazyLogging
 import org.eclipse.jetty.websocket.jsr356.ClientContainer
 
 
-object Main extends App  with LazyLogging{
+class SingleClient extends App  with LazyLogging{
   if (args.length >= 1) {
     Common.localIP = args(0)
   }
+
+
   val container = ContainerProvider.getWebSocketContainer().asInstanceOf[ClientContainer]
   container.setDefaultMaxSessionIdleTimeout(Common.conf.getLong("websocket.timeout"))
   container.getClient.setBindAddress(new InetSocketAddress(Common.localIP, 0))
 
+
+
   val batchSize = Common.batchSize
   val setupInterval = Common.setupInterval
 
-  startReport
 
   val threadPool = Executors.newFixedThreadPool(Common.conf.getInt("setup.threadpool.size"))
 
@@ -33,7 +36,11 @@ object Main extends App  with LazyLogging{
         for (i <- 1 to batchSize if (count < Common.totalClients)) {
           threadPool.submit(new Runnable {
             override def run(): Unit = {
-              container.connectToServer(new TestClient(), new URI(Common.serverIP))
+              try {
+                container.connectToServer(new TestClient(), new URI(Common.serverIP))
+              } catch {
+                case e : Exception => e.printStackTrace()
+              }
             }
           })
           count += 1
@@ -49,13 +56,7 @@ object Main extends App  with LazyLogging{
   }.start()
 
 
-  def startReport(): Unit = {
-    val reporter = ConsoleReporter.forRegistry(Common.metrics)
-      .convertRatesTo(TimeUnit.SECONDS)
-      .convertDurationsTo(TimeUnit.SECONDS)
-      .build()
-    reporter.start(10, TimeUnit.SECONDS)
-  }
+
 
 }
 
